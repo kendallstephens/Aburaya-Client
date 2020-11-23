@@ -15,7 +15,7 @@ class App extends Component {
   state = {
     user: [],
     token: '',
-    setUser: {}
+    loggedIn: 'not logged in'
     
   }
 
@@ -58,7 +58,9 @@ class App extends Component {
      .then(data => {
        console.log(data.token)
        this.setState({
-         user: info.email, token: data.token, setUser: info
+          user: info.email,
+          token: data.token,
+          loggedIn: 'user logged in'
         }, () =>{
         this.props.history.push('/')     
        })
