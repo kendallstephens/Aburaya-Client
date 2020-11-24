@@ -7,27 +7,45 @@ import NotFound from './Components/NotFound'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import './App.css';
-import {Route, Switch, withRouter} from 'react-router-dom'
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom'
 
+
+const profileURL = 'http://localhost:3000/profile'
 
 class App extends Component {
   
   state = {
-    user: [],
-    token: '',
-    loggedIn: 'not logged in'
-    
+    user: {},
+    token: '', 
+    cart: []  
   }
 
    handleHome = () => <Home user = {this.state.user}/>
    renderForm = (routerProps) => {
-    if(routerProps.location.pathname === "/login"){
+    if (routerProps.location.pathname === "/login"){
       return <LoginForm name="Login Form" handleSubmit={this.handleLogin} />
     } else if (routerProps.location.pathname === "/signup"){
       return <SignupForm name="Signup Form" handleSubmit={this.handleSignup} />
     }
   }
 
+  componentDidMount() {
+    let token = localStorage.getItem('token')
+    if (token) {
+      fetch((profileURL), {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        // this.setState({user: user.data})
+      })
+    }
+  }
+  
+ 
    handleLogin = (info) => {
      this.handleAuthFetch(info, 'http://localhost:3000/login')
    }
@@ -39,12 +57,12 @@ class App extends Component {
 
 
    handleAuthFetch = (info, request) => {
-     console.log(info)
+     console.log(request)
      fetch(request, {
        method: 'POST',
        headers: {
          'Content-Type': 'application/json',
-         "Accept": "application/json"
+         "Authorization": "application/json"
        },
        body: JSON.stringify({
          first_name: info.first_name,
@@ -57,30 +75,42 @@ class App extends Component {
      .then(res => res.json())
      .then(data => {
        console.log(data.token)
+       localStorage.setItem('token', data.token)
        this.setState({
-          user: info.email,
-          token: data.token,
-          loggedIn: 'user logged in'
+          user: data.user,
         }, () =>{
         this.props.history.push('/')     
-       })
-       localStorage.setItem('User', info)
+       }) 
       })
    }
 
+   handleLogout = (user) => {
+    localStorage.removeItem('token')
+    return <Redirect to="/" push={true} />
+  }
+
+
+   addToCart = (item) => {
+     this.setState(prevState => {
+       return {cart: [...prevState.cart, item]}
+     })
+   }
+
   render () {
-    const {renderForm, handleHome} = this
+    const {user, cart} = this.state
+    const {renderForm, handleHome, handleLogout, addToCart} = this
   return (
     <div className = 'App'>
      <ul>
      <Switch>
-        <Route path = '/' exact component = {handleHome}/>
-        <Route path= '/login' exact component = {renderForm} />
-        <Route path = "/signup" exact component = {renderForm} />
+        <Route exact path = '/' component = {handleHome}/>
+        <Route exact path = '/login' component = {renderForm} />
+        <Route exact path = '/logout' component={() =>handleLogout()} />
+        <Route exact path = "/signup" component = {renderForm} />
         <Route component = {NotFound} />
      </Switch>
         <Header />
-        <MainContainer />
+        <MainContainer addToCart = {addToCart} cart = {cart}/>
         <NavBar />
     
         </ul>

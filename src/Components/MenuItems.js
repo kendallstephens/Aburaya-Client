@@ -1,7 +1,7 @@
 import React from 'react';
-import {Card, Image} from 'semantic-ui-react'
+import {Card, Image, Icon} from 'semantic-ui-react'
 
-const MenuItems = ({item}) => {
+const MenuItems = ({item, addToCart}) => {
 
     return (
       <Card>
@@ -12,6 +12,9 @@ const MenuItems = ({item}) => {
         <Card.Header>{item.name}</Card.Header>
         <Card.Description>{item.description}</Card.Description>
         <Card.Description>${item.price}</Card.Description>
+      
+          <Icon onClick={() => addToCart(item)} className = 'overlay' color ='grey' name = 'add circle' key = {item.id} />
+      
       </Card.Content>
   
       </div>

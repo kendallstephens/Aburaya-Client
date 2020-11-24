@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Home = (props) => {
-    console.log(props)
+const Home = ({user}) => {
+    console.log(user)
     return(
         <div className="item">
-       {/* <h4>Welcome {props.user.first_name}!</h4> */}
+       {/* <h4>Welcome {user.email}!</h4> */}
     </div>
        
     )

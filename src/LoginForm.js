@@ -1,6 +1,6 @@
 import React from 'react'
-import {Form, Grid, Button, Header, Message, Segment} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Form, Grid, Button, Message, Segment} from 'semantic-ui-react'
+import {NavLink} from 'react-router-dom'
 
 
 class LoginForm extends React.Component {
@@ -39,6 +39,9 @@ return (
         <Button color='black' fluid size='large'>Login</Button>  
           </Segment>
        </Form>
+       <Message>
+        First time here? <NavLink to = '/signup'>Sign Up</NavLink>
+      </Message>
       </Grid.Column>
     </Grid>
   </div>

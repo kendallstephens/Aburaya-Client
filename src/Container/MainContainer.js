@@ -7,7 +7,7 @@ const MenuItemsURL = 'http://localhost:3000/items'
 class MainContainer extends Component {
 
     state = {
-        items: []
+        items: [],
     }
 
     componentDidMount() {
@@ -17,14 +17,22 @@ class MainContainer extends Component {
           this.setState({items})
         })
        }
+
+       selectItem = (id) => {
+           this.setState({
+
+           })
+       }
   
     render() {   
         const {items} = this.state
+        const {cart, addToCart} = this.props
+       
       return (
         <div >
         <Container textAlign = 'center'>
         <div class= 'ui divider'></div>
-        <MenuContainer items = {items}/>
+        <MenuContainer items = {items} addToCart = {addToCart} cart = {cart}/>
         </Container>
             </div>
       );

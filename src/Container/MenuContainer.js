@@ -6,7 +6,8 @@ import {Card} from 'semantic-ui-react'
 class MenuContainer extends Component {
   
     render() {   
-        const {items} = this.props
+        const {items, cart, addToCart} = this.props
+        // const {addToCart} = this
         
       return (
         
@@ -16,6 +17,8 @@ class MenuContainer extends Component {
         <MenuItems
         key = {item.id} 
         item = {item}
+        addToCart = {addToCart} 
+        cart = {cart}
         />
        ))} 
        </Card.Group>
