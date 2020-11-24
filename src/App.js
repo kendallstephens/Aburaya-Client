@@ -6,11 +6,13 @@ import MainContainer from './Container/MainContainer'
 import NotFound from './Components/NotFound'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
+import MapContainer from './Container/MapContainer'
+// import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 import './App.css';
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom'
 
-
 const profileURL = 'http://localhost:3000/profile'
+
 
 class App extends Component {
   
@@ -112,6 +114,7 @@ class App extends Component {
         <Header />
         <MainContainer addToCart = {addToCart} cart = {cart}/>
         <NavBar />
+        <MapContainer />
     
         </ul>
     </div>
