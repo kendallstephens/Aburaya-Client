@@ -1,18 +1,29 @@
 import React from 'react';
-import {NavLink, Link} from 'react-router-dom'
-import {Menu, Grid, Icon} from 'semantic-ui-react'
+import {NavLink} from 'react-router-dom'
+import {Button, Icon, Container, Menu, Item, Segment} from 'semantic-ui-react'
 
 
 
 const Header = () => {
   return (
     <div className="nav-bar">
-      <ul>
-        <li className="nav-item"><h2>Aburuya</h2></li>
-        <NavLink to='/login' ><Icon className = 'overlay' color ='grey' name = 'user' /></NavLink> 
-        <NavLink to='/logout'  activeStyle={{background: '#f1f3f3'}}> Logout </NavLink>
-        <button onClick={() => console.log('hi, from Cart')}><Icon className = 'overlay' color = 'grey' name = 'cart' /></button>
-      </ul>
+
+              <Container>
+                <Menu inverted pointing secondary size='small'>
+                  <Menu.Item >
+                    <Icon name='sidebar' />
+                  </Menu.Item>
+                  <Menu.Item position='right'>
+                    <Button >
+                    <NavLink to='/login' ><Icon className = 'overlay' color ='grey' name = 'user' /></NavLink> 
+                    </Button>
+                  </Menu.Item>
+                  <Menu.Item>
+                     <Button onClick={() => console.log('hi, from Cart')}><Icon className = 'overlay' color = 'grey' name = 'cart'/></Button>
+                  </Menu.Item>
+                </Menu>
+              </Container> 
+
     </div>
   );
 }

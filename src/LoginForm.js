@@ -22,15 +22,19 @@ class LoginForm extends React.Component {
       })
     }
 
+
+
 render(){
   const {email, password} = this.state
   const {handleSubmit, handleChange} = this
+
 return (
 
   <div>
+    
     <Grid textAlign='center' verticalAlign='middle'>
       <Grid.Column style={{maxWidth: 450}}>
-      
+        
         <Form className = 'login-form' onSubmit={handleSubmit} size = 'medium'>
         <h3>Login</h3>
           <Segment stacked>
