@@ -1,4 +1,6 @@
 import React, { Component} from 'react';
+// import About from '../Components/About'
+import Home from '../Components/Home'
 import MenuContainer from './MenuContainer'
 import {Container} from 'semantic-ui-react'
 
@@ -8,6 +10,8 @@ class MainContainer extends Component {
 
     state = {
         items: [],
+        filter: 'none',
+        cart: []
     }
 
     componentDidMount() {
@@ -23,16 +27,26 @@ class MainContainer extends Component {
 
            })
        }
+
+       selectFilter = filter => {
+        this.setState({
+          filter
+        })
+      }
   
     render() {   
-        const {items} = this.state
+        const {selectFilter} = this
+        const {items, filter} = this.state
         const {cart, addToCart} = this.props
        
       return (
+
         <div >
+           {/* <About selectFilter = {selectFilter} filter = {filter}/> */}
+        <Home selectFilter = {selectFilter} filter = {filter}/>
         <Container textAlign = 'center'>
         <div class= 'ui divider'></div>
-        <MenuContainer items = {items} addToCart = {addToCart} cart = {cart}/>
+        <MenuContainer items = {items} addToCart = {addToCart} cart = {cart} filter = {filter}/>
         </Container>
             </div>
       );

@@ -5,11 +5,13 @@ import home from '../Images/home.jpg'
 import '../App.css'
 
 
-const Home =() => {
+const Home = ({selectFilter}) => {
+
 
 
 
   return(
+    
     <div className='home-page'>
      <img className='main-img' />
 
@@ -37,8 +39,9 @@ const Home =() => {
                 circular
                 size='small'
                  />
-              
-                <Link to='/menu'><Button basic>PLATES</Button></Link>
+{/*               
+                <Link to='/menu'><Button basic onClick={(e) => this.selectFilter(1)}>PLATES</Button></Link> */}
+                 <Button basic onClick={(e) => selectFilter(1)}>PLATES</Button>
             </Grid.Column>
             <Grid.Column>
               <Image 
@@ -47,7 +50,8 @@ const Home =() => {
                 size='small'
                  />
               
-                <Link to='/menu'><Button basic>SIDES</Button></Link>
+                <Button basic onClick={(e) => selectFilter(3)}>SIDES</Button>
+                {/* <Link to='/menu'><Button basic >SIDES</Button></Link> */}
             </Grid.Column>
             <Grid.Column>
               <Image 
@@ -55,8 +59,8 @@ const Home =() => {
                 circular
                 size='small'
                  />
-              
-              <Link to='/menu'><Button basic>DRINKS</Button></Link>
+                {/* <Link to='/menu'><Button basic onClick={(e) => selectFilter(4)}>DRINKS</Button></Link> */}
+                <Button basic onClick={(e) => selectFilter(4)}>DRINKS</Button>
             </Grid.Column>
           </Grid>
         </Segment>

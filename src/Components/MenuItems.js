@@ -13,7 +13,7 @@ const MenuItems = ({item, addToCart}) => {
         <Card.Description>{item.description}</Card.Description>
         <Card.Description>${item.price}</Card.Description>
       
-          <Icon onClick={() => addToCart(item)} className = 'overlay' color ='grey' name = 'add circle' key = {item.id} />
+          <Icon onClick={() => console.log(item)} className = 'overlay' color ='grey' name = 'add circle' key = {item.id} />
       
       </Card.Content>
   

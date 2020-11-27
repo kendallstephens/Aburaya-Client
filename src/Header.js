@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
-import {Button, Icon, Container, Menu, Item, Segment} from 'semantic-ui-react'
+import {Button, Icon, Container, Menu} from 'semantic-ui-react'
 
 
 
@@ -9,7 +9,7 @@ const Header = () => {
     <div className="nav-bar">
 
               <Container>
-                <Menu inverted pointing secondary size='small'>
+                <Menu inverted pointing secondary size='large'>
                   <Menu.Item >
                     <Icon name='sidebar' />
                   </Menu.Item>

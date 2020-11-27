@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import NavBar from './Container/NavBar'
+// import About from './Components/About'
 import Home from './Components/Home'
 import Header from './Header'
+import Footer from './Components/Footer'
 import Logout from './Logout'
 import MainContainer from './Container/MainContainer'
 import NotFound from './Components/NotFound'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import MapContainer from './Container/MapContainer'
-// import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 import './App.css';
 import {BrowserRouter as Router,Route, Switch, withRouter, Redirect} from 'react-router-dom'
 
@@ -24,6 +25,8 @@ class App extends Component {
     cart: []  
   }
 
+  
+
   //  handleHome = () => <Home user = {this.state.user}/>
    renderForm = (routerProps) => {
      const {loggedIn} = this.state
@@ -36,6 +39,7 @@ class App extends Component {
     return <SignupForm name="Signup Form" handleSubmit={this.handleSignup} />
   }
   }
+
 
   componentDidMount() {
     let token = localStorage.getItem('token')
@@ -55,7 +59,7 @@ class App extends Component {
       })
     }
   }
-  
+ 
  
    handleLogin = (info) => {
      this.handleAuthFetch(info, 'http://localhost:3000/login')
@@ -114,7 +118,7 @@ class App extends Component {
 
   render () {
     const {cart} = this.state
-    const {renderForm, handleHome, handleLogout, addToCart} = this
+    const {renderForm, handleLogout, addToCart} = this
   return (
     <div className = 'App'>
       <Router>
@@ -130,6 +134,8 @@ class App extends Component {
      </Switch>
      </div>
         <NavBar />
+        {/* <About  /> */}
+        <Footer />
         <MapContainer />
         </Router>
     
