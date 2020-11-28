@@ -21,8 +21,10 @@ class App extends Component {
   state = {
     user: {},
     loggedIn: false,
-    token: '', 
-    cart: []  
+    loggedInUserId: localStorage.userId,
+    token: localStorage.token,
+    cart: [],
+    initializedCart: {}
   }
 
   
@@ -115,6 +117,35 @@ class App extends Component {
        return {cart: [...prevState.cart, item]}
      })
    }
+
+  getOrder = (order) => {
+    this.setState({
+      initializedCart: order
+    })
+  }
+
+   addToCart = (item) => {
+    console.log(item.id)
+    this.setState({
+      cart: [...this.state.cart, item]
+    })
+    fetch("http://localhost:3000/order_items", {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        item_id: item.id,
+        order_id: this.state.initializedCart.id
+      })
+    }).then(response => response.json())
+    .then(data => {
+      fetch("http://localhost:3000/orders/" + this.state.initializedCart.id).then(response => response.json())
+      .then(data => {
+        this.getOrder(data)
+      })
+    })
+  }
 
   render () {
     const {cart} = this.state

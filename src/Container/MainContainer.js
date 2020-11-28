@@ -11,7 +11,6 @@ class MainContainer extends Component {
     state = {
         items: [],
         filter: 'none',
-        cart: []
     }
 
     componentDidMount() {
@@ -22,11 +21,18 @@ class MainContainer extends Component {
         })
        }
 
-       selectItem = (id) => {
-           this.setState({
+      //  selectItem = (id) => {
+      //      this.setState({
 
-           })
-       }
+      //      })
+      //  }
+
+      addToCart = (item) => {
+        this.setState(prevState => {
+          return {cart: [...prevState.cart, item]}
+        })
+      }
+   
 
        selectFilter = filter => {
         this.setState({
