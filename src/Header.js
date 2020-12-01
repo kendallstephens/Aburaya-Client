@@ -19,7 +19,9 @@ const Header = () => {
                     </Button>
                   </Menu.Item>
                   <Menu.Item>
-                     <Button onClick={() => console.log('hi, from Cart')}><Icon className = 'overlay' color = 'grey' name = 'cart'/></Button>
+                  <Button>
+                     <NavLink to='/cart'><Icon className = 'overlay' color = 'grey' name = 'cart'/></NavLink>
+                  </Button>
                   </Menu.Item>
                 </Menu>
               </Container> 

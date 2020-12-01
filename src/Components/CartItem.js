@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, Image, Icon} from 'semantic-ui-react'
 
-const MenuItems = ({item, addToCart}) => {
+const CartItem = ({item}) => {
 
     return (
       <Card>
@@ -13,7 +13,7 @@ const MenuItems = ({item, addToCart}) => {
         <Card.Description>{item.description}</Card.Description>
         <Card.Description>${item.price}</Card.Description>
       
-          <Icon onClick={() => addToCart(item)} className = 'overlay' color ='grey' name = 'add circle' key = {item.id} />
+          
       
       </Card.Content>
   
@@ -22,7 +22,4 @@ const MenuItems = ({item, addToCart}) => {
     );
   }
   
-  export default MenuItems;
-
-
-
+  export default CartItem;

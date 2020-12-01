@@ -1,6 +1,5 @@
 import React from 'react'
 import {Button, Container, Grid, Image, Segment} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
 import home from '../Images/home.jpg'
 import '../App.css'
 
@@ -13,7 +12,7 @@ const Home = ({selectFilter}) => {
   return(
     
     <div className='home-page'>
-     <img className='main-img' />
+     <img className='main-img' alt = 'main'/>
 
      <Segment  vertical textAlign='center'>
        <Container text>

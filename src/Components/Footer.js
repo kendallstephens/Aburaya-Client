@@ -1,7 +1,6 @@
 import React from 'react'
-import {Segment, Icon, Button, Grid} from 'semantic-ui-react'
+import {Segment, Icon, Grid} from 'semantic-ui-react'
 import { ExternalLink } from 'react-external-link'
-import {Link} from 'react-router-dom'
 import '../App.css'
 
 const Footer = () => {

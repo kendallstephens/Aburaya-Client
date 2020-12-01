@@ -10,8 +10,9 @@ import NotFound from './Components/NotFound'
 import LoginForm from './LoginForm'
 import SignupForm from './SignupForm'
 import MapContainer from './Container/MapContainer'
+import Cart from './Components/Cart'
 import './App.css';
-import {BrowserRouter as Router,Route, Switch, withRouter, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from 'react-router-dom'
 
 const profileURL = 'http://localhost:3000/profile'
 
@@ -20,15 +21,13 @@ class App extends Component {
   
   state = {
     user: {},
+    user_id: localStorage.user_id,
     loggedIn: false,
-    loggedInUserId: localStorage.userId,
     token: localStorage.token,
-    cart: [],
-    initializedCart: {}
+    order: {},
+    currentCart: [],
   }
-
   
-
   //  handleHome = () => <Home user = {this.state.user}/>
    renderForm = (routerProps) => {
      const {loggedIn} = this.state
@@ -53,14 +52,17 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
         this.setState({
           user: data,
+          order: data.orders,
+          currentCart: data.items,
           loggedIn: true
         })
       })
     }
   }
+
+
  
  
    handleLogin = (info) => {
@@ -74,12 +76,11 @@ class App extends Component {
 
 
    handleAuthFetch = (info, request) => {
-     console.log(request)
      fetch(request, {
        method: 'POST',
        headers: {
          'Content-Type': 'application/json',
-         "Authorization": "application/json"
+         'Authorization': 'application/json'
        },
        body: JSON.stringify({
          first_name: info.first_name,
@@ -92,7 +93,9 @@ class App extends Component {
      .then(res => res.json())
      .then(data => {
        console.log(data.token)
+      //  console.log(data.user.id)
        localStorage.setItem('token', data.token)
+       localStorage.setItem('user_id', data.user.id)
        this.setState({
           user: data.user,
           loggedIn: true
@@ -104,6 +107,9 @@ class App extends Component {
 
    handleLogout = (user) => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user_id')
+    localStorage.removeItem('order_id')
+    localStorage.removeItem('cart')
     this.setState({
       user: {},
       loggedIn: false
@@ -112,43 +118,63 @@ class App extends Component {
   }
 
 
-   addToCart = (item) => {
-     this.setState(prevState => {
-       return {cart: [...prevState.cart, item]}
-     })
-   }
-
-  getOrder = (order) => {
-    this.setState({
-      initializedCart: order
-    })
-  }
-
-   addToCart = (item) => {
-    console.log(item.id)
-    this.setState({
-      cart: [...this.state.cart, item]
-    })
-    fetch("http://localhost:3000/order_items", {
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        item_id: item.id,
-        order_id: this.state.initializedCart.id
-      })
-    }).then(response => response.json())
-    .then(data => {
-      fetch("http://localhost:3000/orders/" + this.state.initializedCart.id).then(response => response.json())
-      .then(data => {
-        this.getOrder(data)
-      })
-    })
-  }
+    addToCart = async (item) => {
+      const {currentCart, order} = this.state
+      
+      console.log(currentCart)
+      if (currentCart.length > 0)
+       fetch('http://localhost:3000/order_items', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+            body: JSON.stringify({
+            order_id: order,
+            item_id: item.id,
+            quantity: 1
+           })
+          })
+           .then(res => res.json())
+           .then(data => {
+             console.log(data)
+           })
+         else 
+         await fetch('http://localhost:3000/orders',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+            body: JSON.stringify({
+              complete: false,
+              user_id: this.state.user_id
+           })
+          })
+           .then(res => res.json())
+           .then(data => {
+            localStorage.setItem('order_id', data.id)
+             console.log(data)
+           })
+           
+          await fetch('http://localhost:3000/order_items',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+            body: JSON.stringify({
+              order_id: localStorage.getItem('order_id'),
+              item_id: item.id,
+              quantity: 1
+           })
+          })
+           .then(res => res.json())
+           .then(data => {
+             console.log(data)
+           })
+      }
+  
 
   render () {
-    const {cart} = this.state
+    const {user, order_id, cart, currentCart} = this.state
     const {renderForm, handleLogout, addToCart} = this
   return (
     <div className = 'App'>
@@ -156,11 +182,13 @@ class App extends Component {
         <Header />
         <div>
      <Switch>
-        <Route exact path = '/' component = {Home}/>
+        {/* <Route exact path = '/' component = {Home}/> */}
+        <Route exact path = '/' component = {() => <Home />}/>
         <Route exact path = '/menu' component={() => <MainContainer cart = {cart} addToCart = {addToCart} />} />
         <Route exact path = '/login' component = {renderForm} />
         <Route exact path = '/logout' component={() =>handleLogout()} />
         <Route exact path = "/signup" component = {renderForm} />
+        <Route exact path = "/cart" component = {() => <Cart cart = {cart} user = {user} order_id = {order_id} currentCart = {currentCart}/>}/>
         <Route component = {NotFound} />
      </Switch>
      </div>

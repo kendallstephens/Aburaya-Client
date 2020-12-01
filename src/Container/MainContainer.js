@@ -21,12 +21,6 @@ class MainContainer extends Component {
         })
        }
 
-      //  selectItem = (id) => {
-      //      this.setState({
-
-      //      })
-      //  }
-
       addToCart = (item) => {
         this.setState(prevState => {
           return {cart: [...prevState.cart, item]}
