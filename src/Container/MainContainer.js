@@ -1,6 +1,6 @@
-import React, { Component} from 'react';
-// import About from '../Components/About'
+import React, { Component} from 'react'
 import Home from '../Components/Home'
+import MenuBar from './MenuBar'
 import MenuContainer from './MenuContainer'
 import {Container} from 'semantic-ui-react'
 
@@ -42,9 +42,8 @@ class MainContainer extends Component {
       return (
 
         <div >
-           {/* <About selectFilter = {selectFilter} filter = {filter}/> */}
-        <Home selectFilter = {selectFilter} filter = {filter}/>
         <Container textAlign = 'center'>
+        <MenuBar selectFilter = {selectFilter} filter = {filter}/>
         <div class= 'ui divider'></div>
         <MenuContainer items = {items} addToCart = {addToCart} cart = {cart} filter = {filter}/>
         </Container>

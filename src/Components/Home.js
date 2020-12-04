@@ -9,10 +9,11 @@ const Home = ({selectFilter}) => {
 
 
 
+
   return(
     
     <div className='home-page'>
-     <img className='main-img' alt = 'main'/>
+     {/* <img className='main-img' alt = 'main'/> */}
 
      <Segment  vertical textAlign='center'>
        <Container text>
@@ -29,41 +30,6 @@ const Home = ({selectFilter}) => {
          <br />
        </Container>
      </Segment>
-      <Container>
-        <Segment vertical>
-          <Grid container stackable textAlign='center' columns={3}>
-            <Grid.Column>
-              <Image 
-                centered
-                circular
-                size='small'
-                 />
-{/*               
-                <Link to='/menu'><Button basic onClick={(e) => this.selectFilter(1)}>PLATES</Button></Link> */}
-                 <Button basic onClick={(e) => selectFilter(1)}>PLATES</Button>
-            </Grid.Column>
-            <Grid.Column>
-              <Image 
-                centered
-                circular
-                size='small'
-                 />
-              
-                <Button basic onClick={(e) => selectFilter(3)}>SIDES</Button>
-                {/* <Link to='/menu'><Button basic >SIDES</Button></Link> */}
-            </Grid.Column>
-            <Grid.Column>
-              <Image 
-                centered
-                circular
-                size='small'
-                 />
-                {/* <Link to='/menu'><Button basic onClick={(e) => selectFilter(4)}>DRINKS</Button></Link> */}
-                <Button basic onClick={(e) => selectFilter(4)}>DRINKS</Button>
-            </Grid.Column>
-          </Grid>
-        </Segment>
-      </Container>
       <Container>
       <Segment  vertical textAlign='center'>
       <Image 

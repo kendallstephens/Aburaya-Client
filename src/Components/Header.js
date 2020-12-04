@@ -1,18 +1,17 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
+import SideBar from '../Container/SideBar'
 import {Button, Icon, Container, Menu} from 'semantic-ui-react'
 
 
 
-const Header = () => {
+const Header = ({loggedIn}) => {
   return (
     <div className="nav-bar">
 
               <Container>
                 <Menu inverted pointing secondary size='large'>
-                  <Menu.Item >
-                    <Icon name='sidebar' />
-                  </Menu.Item>
+                 <SideBar loggedIn = {loggedIn}/>
                   <Menu.Item position='right'>
                     <Button >
                     <NavLink to='/login' ><Icon className = 'overlay' color ='grey' name = 'user' /></NavLink> 

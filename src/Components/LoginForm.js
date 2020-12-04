@@ -35,7 +35,7 @@ return (
     <Grid textAlign='center' verticalAlign='middle'>
       <Grid.Column style={{maxWidth: 450}}>
         
-        <Form className = 'login-form' onSubmit={handleSubmit} size = 'medium'>
+        <Form className = 'login-form' onSubmit={handleSubmit} size = 'small'>
         <h3>Login</h3>
           <Segment stacked>
         <Form.Input  fluid icon='user' iconPosition='left' type='text' name='email' placeholder='E-mail address' value={email} onChange={handleChange}/><br />

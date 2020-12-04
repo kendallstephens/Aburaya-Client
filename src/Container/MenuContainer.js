@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MenuItems from '../Components/MenuItems'
-import Home from '../Components/Home'
 import {Card} from 'semantic-ui-react'
 
 
@@ -10,10 +9,7 @@ class MenuContainer extends Component {
     render() {   
      
         const {items, cart, filter, addToCart} = this.props
-        // const {addToCart} = this
-
        
-
         const filterItems = (e) => {
           if(filter === 'none'){
             return items

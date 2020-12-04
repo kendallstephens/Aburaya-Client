@@ -1,20 +1,26 @@
 import React, {Component} from 'react';
-import NavBar from './Container/NavBar'
-// import About from './Components/About'
 import Home from './Components/Home'
-import Header from './Header'
+import Header from './Components/Header'
 import Footer from './Components/Footer'
-import Logout from './Logout'
+import Logout from './Components/Logout'
 import MainContainer from './Container/MainContainer'
 import NotFound from './Components/NotFound'
-import LoginForm from './LoginForm'
-import SignupForm from './SignupForm'
+import LoginForm from './Components/LoginForm'
+import SignupForm from './Components/SignupForm'
 import MapContainer from './Container/MapContainer'
-import Cart from './Components/Cart'
+import CartContainer from './Container/CartContainer'
+import StripeLayout from './Container/StripeLayout'
 import './App.css';
 import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from 'react-router-dom'
+// import {Elements} from '@stripe/react-stripe-js';
+// import {loadStripe} from '@stripe/stripe-js';
+
+
+
+
 
 const profileURL = 'http://localhost:3000/profile'
+// const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 
 class App extends Component {
@@ -55,7 +61,8 @@ class App extends Component {
         this.setState({
           user: data,
           order: data.orders,
-          currentCart: data.items,
+          currentCart: data.order_items,
+          orderItems: data.order_items,
           loggedIn: true
         })
       })
@@ -93,7 +100,6 @@ class App extends Component {
      .then(res => res.json())
      .then(data => {
        console.log(data.token)
-      //  console.log(data.user.id)
        localStorage.setItem('token', data.token)
        localStorage.setItem('user_id', data.user.id)
        this.setState({
@@ -171,32 +177,43 @@ class App extends Component {
              console.log(data)
            })
       }
+
+      deleteOrderItem = (item) => {
+       fetch(`http://localhost:3000/order_items/${item}`, {
+          method: 'DELETE',
+        })
+        .then(res => res.json())
+        .then(res => console.log(res))
+      }
   
 
   render () {
-    const {user, order_id, cart, currentCart} = this.state
-    const {renderForm, handleLogout, addToCart} = this
+    const {user, order_id, cart, currentCart, loggedIn} = this.state
+    const {renderForm, handleLogout, addToCart, deleteOrderItem} = this
   return (
     <div className = 'App'>
+   
       <Router>
-        <Header />
+      <Header loggedIn = {loggedIn}/>
+       
+        
         <div>
      <Switch>
-        {/* <Route exact path = '/' component = {Home}/> */}
-        <Route exact path = '/' component = {() => <Home />}/>
+        <Route exact path = '/' component = {Home}/>
         <Route exact path = '/menu' component={() => <MainContainer cart = {cart} addToCart = {addToCart} />} />
         <Route exact path = '/login' component = {renderForm} />
         <Route exact path = '/logout' component={() =>handleLogout()} />
         <Route exact path = "/signup" component = {renderForm} />
-        <Route exact path = "/cart" component = {() => <Cart cart = {cart} user = {user} order_id = {order_id} currentCart = {currentCart}/>}/>
+        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order_id = {order_id} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem}/>}/>
+        <Route exact path = '/payment' component = {StripeLayout}/>
         <Route component = {NotFound} />
      </Switch>
      </div>
-        <NavBar />
-        {/* <About  /> */}
         <Footer />
         <MapContainer />
         </Router>
+       
+        
     
       
     </div>
