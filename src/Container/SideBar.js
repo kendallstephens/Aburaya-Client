@@ -5,25 +5,26 @@ import {NavLink} from 'react-router-dom'
 import {Icon} from 'semantic-ui-react'
 
 
-const SideBar = ({loggedIn}) => {
+const SideBar = ({loggedIn, user}) => {
   return(
-    <Menu>
-    <NavLink to='/'><Icon name='home'/></NavLink>
-    <NavLink to='/login'><Icon name='user'/></NavLink>
-    <NavLink to='/menu'><Icon name='food'/></NavLink>
-     {
-         loggedIn ?
-    <>
-    <NavLink to='/cart' className="bm-item"><Icon name='cart'/></NavLink>
-    </>
-         :
-     <>
-    <NavLink to='/login' className="bm-item"><Icon name='user'/></NavLink>
-    <NavLink to='/menu' className="bm-item"><Icon name='food'/></NavLink>
-    </>
-     }
+     <div>
+       {
+           loggedIn ?
+      <Menu>
+      <NavLink to='/'><Icon name='home'/></NavLink>
+      <NavLink to='/logout'><Icon name='user'/>Logout</NavLink>
+      <NavLink to='/menu'><Icon name='food'/></NavLink>
+      <NavLink to='/cart' className='bm-item'><Icon name='cart'/></NavLink>
+      </Menu>
+           :
+           <Menu>
+      <NavLink to='/'><Icon name='home'/></NavLink>
+      <NavLink to='/login'><Icon name='user'/></NavLink>
+      <NavLink to='/menu'><Icon name='food'/></NavLink>
+      </Menu>
+       }
+       </div>
 
-</Menu>
 
   )
 }

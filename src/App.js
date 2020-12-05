@@ -11,7 +11,8 @@ import MapContainer from './Container/MapContainer'
 import CartContainer from './Container/CartContainer'
 import StripeLayout from './Container/StripeLayout'
 import './App.css';
-import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, withRouter, NavLink, Redirect} from 'react-router-dom'
+import {Button, Icon, Container, Menu} from 'semantic-ui-react'
 // import {Elements} from '@stripe/react-stripe-js';
 // import {loadStripe} from '@stripe/stripe-js';
 
@@ -41,10 +42,11 @@ class App extends Component {
     if (routerProps.location.pathname === "/login" && loggedIn === false){
       return <LoginForm name="Login Form" handleSubmit={this.handleLogin} user = {this.state.user}/>
     } else if (routerProps.location.pathname === "/login" && loggedIn === true){
-      return <Logout user = {this.state.user}/>
+     return <Home user = {this.state.user}/>
     } else if (routerProps.location.pathname === "/signup"){
     return <SignupForm name="Signup Form" handleSubmit={this.handleSignup} />
   }
+
   }
 
 
@@ -68,11 +70,9 @@ class App extends Component {
       })
     }
   }
-
-
- 
  
    handleLogin = (info) => {
+     console.log(info)
      this.handleAuthFetch(info, 'http://localhost:3000/login')
    }
 
@@ -99,15 +99,13 @@ class App extends Component {
      })
      .then(res => res.json())
      .then(data => {
-       console.log(data.token)
+       console.log(data)
        localStorage.setItem('token', data.token)
        localStorage.setItem('user_id', data.user.id)
        this.setState({
-          user: data.user,
-          loggedIn: true
-        }, () =>{
-        this.props.history.push('/menu')     
-       }) 
+        user: data.user,
+        loggedIn: true
+        }) 
       })
    }
 
@@ -115,13 +113,24 @@ class App extends Component {
     localStorage.removeItem('token')
     localStorage.removeItem('user_id')
     localStorage.removeItem('order_id')
-    localStorage.removeItem('cart')
     this.setState({
       user: {},
-      loggedIn: false
+      loggedIn: false,
+      orderItems: {},
+      currentCart: [],
+      order: {},
+      token: null,
+      user_id: null
+
     })
     return <Redirect to="/" push={true} />
   }
+
+  // updateCart = (data) => {
+  //   this.setState({
+  //     currentCart: data
+  //   })
+  //  }
 
 
     addToCart = async (item) => {
@@ -142,7 +151,12 @@ class App extends Component {
           })
            .then(res => res.json())
            .then(data => {
-             console.log(data)
+            //  console.log(data)
+             this.setState(prevState => {
+              return {
+                currentCart: [...prevState.currentCart, data]
+              }
+            })
            })
          else 
          await fetch('http://localhost:3000/orders',{
@@ -157,17 +171,43 @@ class App extends Component {
           })
            .then(res => res.json())
            .then(data => {
-            localStorage.setItem('order_id', data.id)
              console.log(data)
+             this.createOrderItem(data, item)
+           
            })
            
-          await fetch('http://localhost:3000/order_items',{
+          // fetch('http://localhost:3000/order_items',{
+          // method: 'POST',
+          // headers: {
+          //   'Content-Type': 'application/json'
+          // },
+          //   body: JSON.stringify({
+          //     order_id: order,
+          //     item_id: item.id,
+          //     quantity: 1
+          //  })
+          // })
+          //  .then(res => res.json())
+          //  .then(data => {
+          //    console.log(data)
+            //  this.updateCart(data)
+      
+            //  this.setState({
+            //    currentCart: data
+              
+            //   }) 
+          //  })
+      }
+
+      createOrderItem = (data, item) => {
+        console.log(data.orders)
+        fetch('http://localhost:3000/order_items',{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
             body: JSON.stringify({
-              order_id: localStorage.getItem('order_id'),
+              order_id: data.id,
               item_id: item.id,
               quantity: 1
            })
@@ -175,15 +215,36 @@ class App extends Component {
            .then(res => res.json())
            .then(data => {
              console.log(data)
+            //  this.updateCart(data)
+      
+             this.setState({
+               currentCart: data
+              
+              }) 
            })
-      }
+
+      } 
+
+      // updateCart = (data) => {
+      //   this.setState({
+      //     currentCart: data
+      //   })
+      //  }
 
       deleteOrderItem = (item) => {
+        const remove = this.state.currentCart.find(currentCart => currentCart.id === item.id)
        fetch(`http://localhost:3000/order_items/${item}`, {
           method: 'DELETE',
         })
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(data => {
+          console.log(data)
+          this.setState(prevState => {
+            return {
+              currentCart: prevState.currentCart.filter(currentCart => currentCart.id !== data.id)
+            }
+          })
+        })
       }
   
 
@@ -194,7 +255,7 @@ class App extends Component {
     <div className = 'App'>
    
       <Router>
-      <Header loggedIn = {loggedIn}/>
+      <Header loggedIn = {loggedIn} user = {user}/>
        
         
         <div>

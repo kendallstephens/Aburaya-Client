@@ -5,14 +5,14 @@ import {Button, Icon, Container, Menu} from 'semantic-ui-react'
 
 
 
-const Header = ({loggedIn}) => {
+const Header = ({loggedIn, user}) => {
   return (
     <div className="nav-bar">
 
               <Container>
                 <Menu inverted pointing secondary size='large'>
-                 <SideBar loggedIn = {loggedIn}/>
-                  <Menu.Item position='right'>
+                 <SideBar loggedIn = {loggedIn} user = {user}/>
+                  {/* <Menu.Item position='right'>
                     <Button >
                     <NavLink to='/login' ><Icon className = 'overlay' color ='grey' name = 'user' /></NavLink> 
                     </Button>
@@ -21,7 +21,7 @@ const Header = ({loggedIn}) => {
                   <Button>
                      <NavLink to='/cart'><Icon className = 'overlay' color = 'grey' name = 'cart'/></NavLink>
                   </Button>
-                  </Menu.Item>
+                  </Menu.Item> */}
                 </Menu>
               </Container> 
 
