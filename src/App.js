@@ -43,11 +43,12 @@ class App extends Component {
       return <LoginForm name="Login Form" handleSubmit={this.handleLogin} user = {this.state.user}/>
     } else if (routerProps.location.pathname === "/login" && loggedIn === true){
      return <Home user = {this.state.user}/>
-    } else if (routerProps.location.pathname === "/signup"){
-    return <SignupForm name="Signup Form" handleSubmit={this.handleSignup} />
-  }
-
-  }
+    } else if (routerProps.location.pathname === "/signup" && loggedIn == false){
+    return <SignupForm name="Signup Form" handleSubmit={this.handleSignup} user = {this.state.user}/>
+    } else if (routerProps.location.pathname === "/signup" && loggedIn === true){
+    return <Home user = {this.state.user}/>
+    }
+}
 
 
   componentDidMount() {
@@ -60,6 +61,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(data => {
+        console.log(data.order_items)
         this.setState({
           user: data,
           order: data.orders,
@@ -99,14 +101,17 @@ class App extends Component {
      })
      .then(res => res.json())
      .then(data => {
-       console.log(data)
        localStorage.setItem('token', data.token)
        localStorage.setItem('user_id', data.user.id)
        this.setState({
         user: data.user,
-        loggedIn: true
+        loggedIn: true,
+        orders: data.user.orders,
+        currentCart: data.user.order_items,
+        user_id: localStorage.getItem('user_id')
         }) 
       })
+      return <Redirect to="/" push={true} />
    }
 
    handleLogout = (user) => {
@@ -125,13 +130,6 @@ class App extends Component {
     })
     return <Redirect to="/" push={true} />
   }
-
-  // updateCart = (data) => {
-  //   this.setState({
-  //     currentCart: data
-  //   })
-  //  }
-
 
     addToCart = async (item) => {
       const {currentCart, order} = this.state
@@ -175,32 +173,10 @@ class App extends Component {
              this.createOrderItem(data, item)
            
            })
-           
-          // fetch('http://localhost:3000/order_items',{
-          // method: 'POST',
-          // headers: {
-          //   'Content-Type': 'application/json'
-          // },
-          //   body: JSON.stringify({
-          //     order_id: order,
-          //     item_id: item.id,
-          //     quantity: 1
-          //  })
-          // })
-          //  .then(res => res.json())
-          //  .then(data => {
-          //    console.log(data)
-            //  this.updateCart(data)
-      
-            //  this.setState({
-            //    currentCart: data
-              
-            //   }) 
-          //  })
       }
 
       createOrderItem = (data, item) => {
-        console.log(data.orders)
+        console.log(data)
         fetch('http://localhost:3000/order_items',{
           method: 'POST',
           headers: {
@@ -214,22 +190,15 @@ class App extends Component {
           })
            .then(res => res.json())
            .then(data => {
-             console.log(data)
-            //  this.updateCart(data)
-      
-             this.setState({
-               currentCart: data
-              
-              }) 
+            this.setState(prevState => {
+              return {
+                currentCart: [...prevState.currentCart, data]
+              }
+            })
            })
 
       } 
 
-      // updateCart = (data) => {
-      //   this.setState({
-      //     currentCart: data
-      //   })
-      //  }
 
       deleteOrderItem = (item) => {
         const remove = this.state.currentCart.find(currentCart => currentCart.id === item.id)
@@ -238,7 +207,6 @@ class App extends Component {
         })
         .then(res => res.json())
         .then(data => {
-          console.log(data)
           this.setState(prevState => {
             return {
               currentCart: prevState.currentCart.filter(currentCart => currentCart.id !== data.id)
