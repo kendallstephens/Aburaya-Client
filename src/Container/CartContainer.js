@@ -5,7 +5,18 @@ import {NavLink} from 'react-router-dom'
 
 
 class CartContainer extends Component {
-    
+
+    completeOrder = ({order}) => {
+       fetch(`http://localhost:3000/order_items/${order}`, {
+           method: 'PATCH',
+    })
+    .then(res => res.json())
+    .then(data =>{
+        console.log(data)
+
+    })
+}
+   
     getTotal = () => {
         let total = 0
         this.props.currentCart.forEach(item => {
@@ -15,8 +26,20 @@ class CartContainer extends Component {
       }
 
     
+
+      getTax = () => {
+        let total = 0
+        this.props.currentCart.forEach(item => {
+          total += item.item.price
+        })
+        return total * 0.0925
+      }
+  
+
+      
+    
     render (){
-        const {getTotal} = this
+        const {getTotal, getTax} = this
         const {currentCart, deleteOrderItem} = this.props
 
         if (this.props.currentCart.length > 0){
@@ -34,11 +57,13 @@ class CartContainer extends Component {
             />
             ))} 
         </Card.Group>
-        <h3>Order Total: ${getTotal()}</h3>
+        <h5>Subtotal: ${getTotal().toFixed(2)}</h5>
+        <h5>Tax: ${getTax().toFixed(2)}</h5>
+         <h3>Total: ${getTotal() + getTax()}</h3>
         </div>
-        <Button >
-        <NavLink to='/payment'>
-        Checkout
+        <Button color='black'  >
+        <NavLink to='/payment' getTotal = {getTotal} getTax = {getTax}>
+        ORDER & PAY
        </NavLink>
         </Button>
         </div>

@@ -4,7 +4,7 @@ import {Card, Image, Icon, Button} from 'semantic-ui-react'
 
 
 const CartItem = ({item, deleteOrderItem}) => {
-  console.log(item.id)
+  // console.log(item.id)
 
 
     return (

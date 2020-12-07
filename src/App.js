@@ -10,6 +10,8 @@ import SignupForm from './Components/SignupForm'
 import MapContainer from './Container/MapContainer'
 import CartContainer from './Container/CartContainer'
 import StripeLayout from './Container/StripeLayout'
+import PaymentConfirmation from './Components/PaymentConfirmation'
+// import FormContainer from './Container/FormContainer'
 import './App.css';
 import {BrowserRouter as Router, Route, Switch, withRouter, NavLink, Redirect} from 'react-router-dom'
 import {Button, Icon, Container, Menu} from 'semantic-ui-react'
@@ -106,9 +108,10 @@ class App extends Component {
        this.setState({
         user: data.user,
         loggedIn: true,
-        orders: data.user.orders,
+        order: data.user.orders,
         currentCart: data.user.order_items,
-        user_id: localStorage.getItem('user_id')
+        user_id: localStorage.getItem('user_id'),
+  
         }) 
       })
       return <Redirect to="/" push={true} />
@@ -169,9 +172,8 @@ class App extends Component {
           })
            .then(res => res.json())
            .then(data => {
-             console.log(data)
+             console.log(data.id)
              this.createOrderItem(data, item)
-           
            })
       }
 
@@ -190,9 +192,12 @@ class App extends Component {
           })
            .then(res => res.json())
            .then(data => {
+             console.log(data)
             this.setState(prevState => {
               return {
-                currentCart: [...prevState.currentCart, data]
+                currentCart: [...prevState.currentCart, data],
+                order: data.id
+               
               }
             })
            })
@@ -201,7 +206,8 @@ class App extends Component {
 
 
       deleteOrderItem = (item) => {
-        const remove = this.state.currentCart.find(currentCart => currentCart.id === item.id)
+        console.log(item)
+        // const remove = this.state.currentCart.find(currentCart => currentCart.id === item.id)
        fetch(`http://localhost:3000/order_items/${item}`, {
           method: 'DELETE',
         })
@@ -217,7 +223,7 @@ class App extends Component {
   
 
   render () {
-    const {user, order_id, cart, currentCart, loggedIn} = this.state
+    const {user, order, cart, currentCart, loggedIn} = this.state
     const {renderForm, handleLogout, addToCart, deleteOrderItem} = this
   return (
     <div className = 'App'>
@@ -229,17 +235,18 @@ class App extends Component {
         <div>
      <Switch>
         <Route exact path = '/' component = {Home}/>
+        <Route exact path = '/location' component = {MapContainer}/>
         <Route exact path = '/menu' component={() => <MainContainer cart = {cart} addToCart = {addToCart} />} />
         <Route exact path = '/login' component = {renderForm} />
         <Route exact path = '/logout' component={() =>handleLogout()} />
         <Route exact path = "/signup" component = {renderForm} />
-        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order_id = {order_id} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem}/>}/>
+        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order = {order} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem}/>}/>
         <Route exact path = '/payment' component = {StripeLayout}/>
+        <Route exact path = '/complete' component = {PaymentConfirmation}/>
         <Route component = {NotFound} />
      </Switch>
      </div>
-        <Footer />
-        <MapContainer />
+        {/* <MapContainer /> */}
         </Router>
        
         

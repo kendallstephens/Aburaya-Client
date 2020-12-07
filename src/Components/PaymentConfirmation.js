@@ -5,7 +5,7 @@ import home from '../Images/home.jpg'
 import '../App.css'
 
 
-const Home = ({selectFilter}) => {
+const PaymentConfirmation = ({selectFilter}) => {
 
 
 
@@ -13,21 +13,13 @@ const Home = ({selectFilter}) => {
 
   return(
     
-    <div className='home-page'>
+    <div>
      {/* <img className='main-img' alt = 'main'/> */}
 
      <Segment  vertical textAlign='center'>
        <Container text>
-       <h1>ABURUYA</h1>
-        <p>
-         We are a punk rock influenced restaurant specializing in Japanese fried chicken and seasonal izakaya plates.
-         Everything is freshly made in house, from marinades to sauces and seasonings.
-
-         We source our produce fresh from local weekly farmers' markets and use organic and natural products. 
-       
-         Fun fact: 'Abura-ya' means 'Oil Shop' in Japanese!
-       
-         </p>
+        <p>Your payment was successful and your order will be ready for pickup in 30-45 min</p>
+        <p>Arigato!</p>
          <br />
        </Container>
      </Segment>
@@ -46,4 +38,4 @@ const Home = ({selectFilter}) => {
   )
 }
 
-export default Home
+export default PaymentConfirmation

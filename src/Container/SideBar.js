@@ -15,12 +15,14 @@ const SideBar = ({loggedIn, user}) => {
       <NavLink to='/logout'><Icon name='user'/>Logout</NavLink>
       <NavLink to='/menu'><Icon name='food'/></NavLink>
       <NavLink to='/cart' className='bm-item'><Icon name='cart'/></NavLink>
+      <NavLink to='/location'><Icon name='location arrow'/></NavLink>
       </Menu>
            :
            <Menu>
       <NavLink to='/'><Icon name='home'/></NavLink>
       <NavLink to='/login'><Icon name='user'/></NavLink>
       <NavLink to='/menu'><Icon name='food'/></NavLink>
+      <NavLink to='/location'><Icon name='location arrow'/></NavLink>
       </Menu>
        }
        </div>
