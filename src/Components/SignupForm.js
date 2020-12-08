@@ -42,7 +42,7 @@ return (
       <Form.Input  fluid placeholder='Last Name' type='text' name='last_name' value={last_name} onChange={handleChange}/><br />
       <Form.Input  fluid placeholder='Phone Number' type='text' name='phone_number' value={phone_number} onChange={handleChange}/><br />
       <Form.Input  fluid placeholder='E-mail address' type='text' name='email' value={email} onChange={handleChange}/><br />
-      <Form.Input  fluid placeholder='Password' type='text' name='password' value={password} onChange={handleChange}/><br />
+      <Form.Input  fluid placeholder='Password' type='password' name='password' value={password} onChange={handleChange}/><br />
       <Button color='black' fluid size='large'>Sign Up</Button>
       </Segment>
        </Form>

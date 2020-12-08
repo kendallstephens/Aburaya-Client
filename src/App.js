@@ -68,7 +68,6 @@ class App extends Component {
           user: data,
           order: data.orders,
           currentCart: data.order_items,
-          orderItems: data.order_items,
           loggedIn: true
         })
       })
@@ -124,7 +123,6 @@ class App extends Component {
     this.setState({
       user: {},
       loggedIn: false,
-      orderItems: {},
       currentCart: [],
       order: {},
       token: null,
@@ -174,6 +172,9 @@ class App extends Component {
            .then(data => {
              console.log(data.id)
              this.createOrderItem(data, item)
+             this.setState({
+               order: data.id
+             })
            })
       }
 
@@ -195,8 +196,7 @@ class App extends Component {
              console.log(data)
             this.setState(prevState => {
               return {
-                currentCart: [...prevState.currentCart, data],
-                order: data.id
+                currentCart: [...prevState.currentCart, data]
                
               }
             })
@@ -220,11 +220,19 @@ class App extends Component {
           })
         })
       }
+
+      completeOrder = (order) => {
+             this.setState({
+                 currentCart: [],
+                 order: {}
+             })
+             this.props.history.push('/payment')     
+      }
   
 
   render () {
     const {user, order, cart, currentCart, loggedIn} = this.state
-    const {renderForm, handleLogout, addToCart, deleteOrderItem} = this
+    const {renderForm, handleLogout, addToCart, deleteOrderItem, completeOrder} = this
   return (
     <div className = 'App'>
    
@@ -240,7 +248,7 @@ class App extends Component {
         <Route exact path = '/login' component = {renderForm} />
         <Route exact path = '/logout' component={() =>handleLogout()} />
         <Route exact path = "/signup" component = {renderForm} />
-        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order = {order} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem}/>}/>
+        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order = {order} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem} completeOrder = {completeOrder}/>}/>
         <Route exact path = '/payment' component = {StripeLayout}/>
         <Route exact path = '/complete' component = {PaymentConfirmation}/>
         <Route component = {NotFound} />

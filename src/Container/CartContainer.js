@@ -1,20 +1,29 @@
 import React, { Component} from 'react';
 import CartItems from '../Components/CartItems'
 import {Card, Button} from 'semantic-ui-react'
+import {BrowserRouter as Redirect} from 'react-router-dom'
 import {NavLink} from 'react-router-dom'
 
 
 class CartContainer extends Component {
+   
 
-    completeOrder = ({order}) => {
-       fetch(`http://localhost:3000/order_items/${order}`, {
+    completeOrder = (order) => {
+       fetch(`http://localhost:3000/orders/${order}`, {
            method: 'PATCH',
+           headers: {
+            'Content-Type': 'application/json'
+          },
+            body: JSON.stringify({
+            complete: true
+           })
     })
     .then(res => res.json())
-    .then(data =>{
+    .then(data => {
         console.log(data)
-
+         this.props.completeOrder()
     })
+
 }
    
     getTotal = () => {
@@ -39,8 +48,9 @@ class CartContainer extends Component {
       
     
     render (){
-        const {getTotal, getTax} = this
-        const {currentCart, deleteOrderItem} = this.props
+        const {getTotal, getTax, completeOrder} = this
+        const {currentCart, deleteOrderItem, order} = this.props
+        console.log(order)
 
         if (this.props.currentCart.length > 0){
     return(
@@ -61,10 +71,10 @@ class CartContainer extends Component {
         <h5>Tax: ${getTax().toFixed(2)}</h5>
          <h3>Total: ${getTotal() + getTax()}</h3>
         </div>
-        <Button color='black'  >
-        <NavLink to='/payment' getTotal = {getTotal} getTax = {getTax}>
+        <Button color='black' onClick={() => completeOrder(order)} >
+        {/* <NavLink to='/payment' getTotal = {getTotal} getTax = {getTax}> */}
         ORDER & PAY
-       </NavLink>
+       {/* </NavLink> */}
         </Button>
         </div>
        
