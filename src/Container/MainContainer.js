@@ -1,5 +1,4 @@
 import React, { Component} from 'react'
-import Home from '../Components/Home'
 import MenuBar from './MenuBar'
 import MenuContainer from './MenuContainer'
 import {Container} from 'semantic-ui-react'

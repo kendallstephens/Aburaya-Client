@@ -1,8 +1,7 @@
 import React, { Component} from 'react';
 import CartItems from '../Components/CartItems'
 import {Card, Button} from 'semantic-ui-react'
-import {BrowserRouter as Redirect} from 'react-router-dom'
-import {NavLink} from 'react-router-dom'
+
 
 
 class CartContainer extends Component {
@@ -72,9 +71,7 @@ class CartContainer extends Component {
          <h3>Total: ${getTotal() + getTax()}</h3>
         </div>
         <Button color='black' onClick={() => completeOrder(order)} >
-        {/* <NavLink to='/payment' getTotal = {getTotal} getTax = {getTax}> */}
         ORDER & PAY
-       {/* </NavLink> */}
         </Button>
         </div>
        

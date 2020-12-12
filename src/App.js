@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Home from './Components/Home'
 import Header from './Components/Header'
-import Footer from './Components/Footer'
-import Logout from './Components/Logout'
 import MainContainer from './Container/MainContainer'
 import NotFound from './Components/NotFound'
 import LoginForm from './Components/LoginForm'
@@ -11,19 +9,16 @@ import MapContainer from './Container/MapContainer'
 import CartContainer from './Container/CartContainer'
 import StripeLayout from './Container/StripeLayout'
 import PaymentConfirmation from './Components/PaymentConfirmation'
-// import FormContainer from './Container/FormContainer'
 import './App.css';
-import {BrowserRouter as Router, Route, Switch, withRouter, NavLink, Redirect} from 'react-router-dom'
-import {Button, Icon, Container, Menu} from 'semantic-ui-react'
-// import {Elements} from '@stripe/react-stripe-js';
-// import {loadStripe} from '@stripe/stripe-js';
+import {BrowserRouter as Router, Route, Switch, withRouter, Redirect} from 'react-router-dom'
+
+
 
 
 
 
 
 const profileURL = 'http://localhost:3000/profile'
-// const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 
 class App extends Component {
@@ -45,7 +40,7 @@ class App extends Component {
       return <LoginForm name="Login Form" handleSubmit={this.handleLogin} user = {this.state.user}/>
     } else if (routerProps.location.pathname === "/login" && loggedIn === true){
      return <Home user = {this.state.user}/>
-    } else if (routerProps.location.pathname === "/signup" && loggedIn == false){
+    } else if (routerProps.location.pathname === "/signup" && loggedIn === false){
     return <SignupForm name="Signup Form" handleSubmit={this.handleSignup} user = {this.state.user}/>
     } else if (routerProps.location.pathname === "/signup" && loggedIn === true){
     return <Home user = {this.state.user}/>
@@ -207,7 +202,6 @@ class App extends Component {
 
       deleteOrderItem = (item) => {
         console.log(item)
-        // const remove = this.state.currentCart.find(currentCart => currentCart.id === item.id)
        fetch(`http://localhost:3000/order_items/${item}`, {
           method: 'DELETE',
         })
@@ -225,13 +219,13 @@ class App extends Component {
              this.setState({
                  currentCart: [],
                  order: {}
-             })
-             this.props.history.push('/payment')     
+             }) 
+             return this.props.history.push('/payment')     
       }
   
 
   render () {
-    const {user, order, cart, currentCart, loggedIn} = this.state
+    const {user, order, cart, currentCart, loggedIn, user_id} = this.state
     const {renderForm, handleLogout, addToCart, deleteOrderItem, completeOrder} = this
   return (
     <div className = 'App'>
@@ -243,13 +237,13 @@ class App extends Component {
         <div>
      <Switch>
         <Route exact path = '/' component = {Home}/>
+        <Route exact path = '/payment' component={() => <StripeLayout user_id = {user_id} />} />
         <Route exact path = '/location' component = {MapContainer}/>
         <Route exact path = '/menu' component={() => <MainContainer cart = {cart} addToCart = {addToCart} />} />
         <Route exact path = '/login' component = {renderForm} />
         <Route exact path = '/logout' component={() =>handleLogout()} />
         <Route exact path = "/signup" component = {renderForm} />
         <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order = {order} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem} completeOrder = {completeOrder}/>}/>
-        <Route exact path = '/payment' component = {StripeLayout}/>
         <Route exact path = '/complete' component = {PaymentConfirmation}/>
         <Route component = {NotFound} />
      </Switch>

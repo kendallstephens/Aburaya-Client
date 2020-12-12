@@ -1,5 +1,5 @@
 import React from 'react'
-import {Icon, Container, Grid, Image, Segment} from 'semantic-ui-react'
+import {Icon, Container, Grid, Segment} from 'semantic-ui-react'
 import Map from '../Components/Map'
 import { ExternalLink } from 'react-external-link'
 
@@ -26,7 +26,7 @@ class MapContainer extends React.Component {
             <h3>CONTACT</h3>
             <h4>(510) 502-7743</h4>
             <ExternalLink href='mailto: japanesefriedchicken@aburayaoakland.com' target = 'blank' >
-            <Icon name='mail' size='large'/>
+            <Icon name='mail' size='large' color='black'/>
             </ExternalLink>
             </Grid.Column>
             </Grid>
