@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
 import CartItems from '../Components/CartItems'
 import {Card, Button} from 'semantic-ui-react'
+import StripeLayout from './StripeLayout'
 
 
 
@@ -20,7 +21,7 @@ class CartContainer extends Component {
     .then(res => res.json())
     .then(data => {
         console.log(data)
-         this.props.completeOrder()
+         this.props.completeOrder(this.getTotal, this.getTax)
     })
 
 }

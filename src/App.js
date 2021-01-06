@@ -30,6 +30,8 @@ class App extends Component {
     token: localStorage.token,
     order: {},
     currentCart: [],
+    total: [],
+    tax: []
   }
   
   //  handleHome = () => <Home user = {this.state.user}/>
@@ -215,41 +217,51 @@ class App extends Component {
         })
       }
 
-      completeOrder = (order) => {
+      
+
+      completeOrder = (getTotal, getTax) => {
+        console.log(getTotal().toFixed(2))
              this.setState({
                  currentCart: [],
-                 order: {}
+                 order: {},
+                 total: getTotal().toFixed(2),
+                 tax: getTax().toFixed(2)
+                 
              }) 
              return this.props.history.push('/payment')     
       }
+
+      confirmPayment = () => {
+        return this.props.history.push('/complete')
+    }
   
 
   render () {
-    const {user, order, cart, currentCart, loggedIn, user_id} = this.state
-    const {renderForm, handleLogout, addToCart, deleteOrderItem, completeOrder} = this
+    const {user, order, cart, currentCart, loggedIn, user_id, total, tax} = this.state
+    const {renderForm, handleLogout, addToCart, deleteOrderItem, completeOrder, confirmPayment} = this
   return (
     <div className = 'App'>
    
-      <Router>
+      {/* <Router> */}
       <Header loggedIn = {loggedIn} user = {user}/>
        
         
         <div>
      <Switch>
         <Route exact path = '/' component = {Home}/>
-        <Route exact path = '/payment' component={() => <StripeLayout user_id = {user_id} />} />
+        <Route exact path = '/payment' component={() => <StripeLayout user_id = {user_id} confirmPayment = {confirmPayment} total = {total} tax = {tax}/>} />
         <Route exact path = '/location' component = {MapContainer}/>
         <Route exact path = '/menu' component={() => <MainContainer cart = {cart} addToCart = {addToCart} />} />
         <Route exact path = '/login' component = {renderForm} />
         <Route exact path = '/logout' component={() =>handleLogout()} />
         <Route exact path = "/signup" component = {renderForm} />
-        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order = {order} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem} completeOrder = {completeOrder}/>}/>
+        <Route exact path = "/cart" component = {() => <CartContainer cart = {cart} user = {user} order = {order} currentCart = {currentCart} deleteOrderItem = {deleteOrderItem}  completeOrder = {completeOrder} confirmPayment = {confirmPayment}/>}/>
         <Route exact path = '/complete' component = {PaymentConfirmation}/>
         <Route component = {NotFound} />
      </Switch>
      </div>
         {/* <MapContainer /> */}
-        </Router>
+        {/* </Router> */}
        
         
     
