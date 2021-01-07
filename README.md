@@ -32,3 +32,7 @@ To integrate the Stripe and Google Maps API's you will first need to create an a
 
 [GoogleMaps](https://developers.google.com/maps/documentation)
 
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
