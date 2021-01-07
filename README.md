@@ -16,7 +16,7 @@ Aburuya is an e-commerce restaurant platform that allows users to signup/login, 
 * Stripe 
 * PostgreSQL
 
-### Installation
+## Installation
 
 To fully clone this app you'll want to also clone the [server code](https://github.com/kendallstephens/Aburuya-Server)
 
