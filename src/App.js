@@ -99,6 +99,7 @@ class App extends Component {
      })
      .then(res => res.json())
      .then(data => {
+      if(data.error) throw Error(data.error)
        localStorage.setItem('token', data.token)
        localStorage.setItem('user_id', data.user.id)
        this.setState({
@@ -110,7 +111,9 @@ class App extends Component {
   
         }) 
       })
+      .catch(errors =>alert(errors))
       return <Redirect to="/" push={true} />
+      
    }
 
    handleLogout = (user) => {
