@@ -34,7 +34,6 @@ class App extends Component {
     tax: []
   }
   
-  //  handleHome = () => <Home user = {this.state.user}/>
    renderForm = (routerProps) => {
      const {loggedIn} = this.state
      
@@ -245,7 +244,7 @@ class App extends Component {
   return (
     <div className = 'App'>
    
-      {/* <Router> */}
+     
       <Header loggedIn = {loggedIn} user = {user}/>
        
         
@@ -263,8 +262,7 @@ class App extends Component {
         <Route component = {NotFound} />
      </Switch>
      </div>
-        {/* <MapContainer /> */}
-        {/* </Router> */}
+       
        
         
     

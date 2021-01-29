@@ -18,7 +18,7 @@ const Home = ({selectFilter}) => {
 
      <Segment  vertical textAlign='center'>
        <Container text>
-       <h1>ABURUYA</h1>
+       <h1>ABURAYA</h1>
         <p>
          We are a punk rock influenced restaurant specializing in Japanese fried chicken and seasonal izakaya plates.
          Everything is freshly made in house, from marinades to sauces and seasonings.
