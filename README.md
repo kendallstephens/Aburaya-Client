@@ -1,6 +1,6 @@
-# Aburuya
+# Aburaya
 
-Aburuya is an e-commerce restaurant platform that allows users to signup/login, view menu items, add items to their cart, and purchase items in their cart. Credit card processing was made possible using Stripe. Thank you for visiting!
+Aburaya is an e-commerce restaurant platform that allows users to signup/login, view menu items, add items to their cart, and purchase items in their cart. Credit card processing was made possible using Stripe. Thank you for visiting!
 
 ## Languages and Frameworks
 
