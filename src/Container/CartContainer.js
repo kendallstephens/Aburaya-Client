@@ -67,9 +67,10 @@ class CartContainer extends Component {
             />
             ))} 
         </Card.Group>
-        <h5>Subtotal: ${getTotal().toFixed(2)}</h5>
-        <h5>Tax: ${getTax().toFixed(2)}</h5>
-         <h3>Total: ${getTotal() + getTax()}</h3>
+        {/* <h5>Subtotal: ${getTotal().toFixed(2)}</h5>
+        <h5>Tax: ${getTax().toFixed(2)}</h5> */}
+         {/* <h3>Total: ${getTotal() + getTax()}</h3> */}
+         <h3>Total: ${getTotal()}</h3>
         </div>
         <Button color='black' onClick={() => completeOrder(order)} >
         ORDER & PAY
