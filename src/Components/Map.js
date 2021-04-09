@@ -9,30 +9,24 @@ export class MapContainer extends Component {
       height: '50%'
       }
 
-      // const pos = {
-      //   lat: 37.8060199, 
-      //   lng: -122.2697855
-      // }
-
-  return (
-  <div className= 'App'>
-  <Map google = {this.props.google} 
-  zoom = {10}
-  initialCenter={{
-  lat: 37.8060199,
-  lng: -122.2697855
-  }}
-  style = {style}>
-  < Marker position = {{                   
-                 lat: 37.8060199,                     
-                 lng: -122.2697855                
-  }}
-  label={'Aburuya'}
-             />
-             </Map>
-  
-  </div>
-  );
+    return (
+      <div className= 'App'>
+        <Map google = {this.props.google} 
+        zoom = {10}
+        initialCenter={{
+        lat: 37.8060199,
+        lng: -122.2697855
+       }}  
+      style = {style}>
+        < Marker position = {{                   
+          lat: 37.8060199,                     
+          lng: -122.2697855                
+        }}
+        label={'Aburaya'}
+        />
+        </Map>
+      </div>
+    );
   }
  }
 
